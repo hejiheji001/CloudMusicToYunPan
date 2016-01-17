@@ -65,7 +65,7 @@ public class CloudMusicToYunPan {
         String durl = au.getDownloadUrl(bestMusicId);
         System.out.println("Current task: " + newFileName);
         yo.setSource_url(durl);
-//        String taskid = yo.saveToYunPan("", "");
+        yo.saveToYunPan("", "");
 //        if(!taskid.isEmpty()){
 //            System.out.println("Saved TO Yun Pan, ID IS " + taskid);
 //        }else{
