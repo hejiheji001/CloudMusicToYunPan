@@ -65,12 +65,12 @@ public class CloudMusicToYunPan {
         String durl = au.getDownloadUrl(bestMusicId);
         System.out.println("Current task: " + newFileName);
         yo.setSource_url(durl);
-        String taskid = yo.saveToYunPan("", "");
-        if(!taskid.isEmpty()){
-            System.out.println("Saved TO Yun Pan, ID IS " + taskid);
-        }else{
-            System.out.println("Failed To Save To Yun Pan");
-        }
+//        String taskid = yo.saveToYunPan("", "");
+//        if(!taskid.isEmpty()){
+//            System.out.println("Saved TO Yun Pan, ID IS " + taskid);
+//        }else{
+//            System.out.println("Failed To Save To Yun Pan");
+//        }
     }
 
     public static void saveListToYunPan(YunOffline yo, String listId){
@@ -92,11 +92,16 @@ public class CloudMusicToYunPan {
     }
 
     public static void test(){
-        YunOffline yo = new YunOffline("hejiheji001@163.com", "MyLifeForFire0");
-//        yo.setPanToken("ee7f2c5c90a95e5c4ac6425f21a994d1");
-        if(yo.initYunPan()) {
-            yo.getYunPanToken();
-            saveListToYunPan(yo, "41370921");
-        }
+//        YunOffline yo = new YunOffline("@163.com", "");
+////        yo.setPanToken("ee7f2c5c90a95e5c4ac6425f21a994d1");
+//        if(yo.initYunPan()) {
+//            yo.getYunPanToken();
+//            saveListToYunPan(yo, "41370921");
+//        }
+        System.out.println("-u <baidu yun username> -p <baidu yun password> [options]");
+        System.out.println("-id <netease music id>");
+        System.out.println("or");
+        System.out.println("-playlist <netease music play list id>");
+
     }
 }
