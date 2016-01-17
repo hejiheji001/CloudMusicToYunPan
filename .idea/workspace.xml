@@ -75,7 +75,7 @@
       <file leaf-file-name="YunOffline.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/../BDNM/YunOffline/src/com/fireawayh/main/YunOffline.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.9593023">
+            <state vertical-scroll-proportion="-0.65697676">
               <caret line="431" column="34" selection-start-line="431" selection-start-column="34" selection-end-line="431" selection-end-column="34" />
               <folding>
                 <element signature="e#2907#2908#0" expanded="true" />
@@ -651,12 +651,12 @@
       <created>1453054511831</created>
       <option name="number" value="Default" />
       <updated>1453054511831</updated>
-      <workItem from="1453054513173" duration="13938000" />
+      <workItem from="1453054513173" duration="14134000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="13938000" />
+    <option name="totallyTimeSpent" value="14134000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1263" height="741" extended-state="0" />
@@ -894,7 +894,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/../BDNM/YunOffline/src/com/fireawayh/main/YunOffline.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.9593023">
+        <state vertical-scroll-proportion="-0.65697676">
           <caret line="431" column="34" selection-start-line="431" selection-start-column="34" selection-end-line="431" selection-end-column="34" />
           <folding>
             <element signature="e#2907#2908#0" expanded="true" />
