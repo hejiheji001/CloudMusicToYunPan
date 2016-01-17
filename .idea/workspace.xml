@@ -58,11 +58,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CloudMusicToYunPan.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="CloudMusicToYunPan.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/fireawayh/main/cloudmusictoyunpan/CloudMusicToYunPan.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.4375">
-              <caret line="96" column="29" selection-start-line="96" selection-start-column="29" selection-end-line="96" selection-end-column="29" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="88" column="29" selection-start-line="88" selection-start-column="29" selection-end-line="88" selection-end-column="29" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -70,11 +70,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="YunOffline.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="YunOffline.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/../BDNM/YunOffline/src/com/fireawayh/main/YunOffline.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="332" column="42" selection-start-line="332" selection-start-column="42" selection-end-line="332" selection-end-column="42" />
+            <state vertical-scroll-proportion="0.53125">
+              <caret line="424" column="14" selection-start-line="424" selection-start-column="14" selection-end-line="424" selection-end-column="14" />
               <folding>
                 <element signature="e#2951#2952#0" expanded="true" />
                 <element signature="e#2987#2988#0" expanded="true" />
@@ -154,9 +154,9 @@
       <list>
         <option value="$PROJECT_DIR$/src/com/fireawayh/main/cloudmusictoyunpan/main.java" />
         <option value="$PROJECT_DIR$/../CloudMusic/src/com/fireawayh/cloudmusic/utils/MusicUtils.java" />
-        <option value="$PROJECT_DIR$/../BDNM/YunOffline/src/com/fireawayh/main/YunOffline.java" />
         <option value="$PROJECT_DIR$/src/com/fireawayh/main/cloudmusictoyunpan/CloudMusicToYunPan.java" />
         <option value="$PROJECT_DIR$/../BDNM/YunOffline/src/com/fireawayh/util/IOUtils.java" />
+        <option value="$PROJECT_DIR$/../BDNM/YunOffline/src/com/fireawayh/main/YunOffline.java" />
       </list>
     </option>
   </component>
@@ -200,38 +200,6 @@
       <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CloudMusicToYunPan" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="External Libraries" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="YunOffline" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CloudMusicToYunPan" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="External Libraries" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CloudMusic" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="CloudMusic.jar" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
           <PATH>
             <PATH_ELEMENT>
               <option name="myItemId" value="CloudMusicToYunPan" />
@@ -680,12 +648,12 @@
       <created>1453054511831</created>
       <option name="number" value="Default" />
       <updated>1453054511831</updated>
-      <workItem from="1453054513173" duration="10160000" />
+      <workItem from="1453054513173" duration="10478000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="10160000" />
+    <option name="totallyTimeSpent" value="10478000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="865" height="741" extended-state="0" />
@@ -884,19 +852,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../BDNM/YunOffline/src/com/fireawayh/main/YunOffline.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="332" column="42" selection-start-line="332" selection-start-column="42" selection-end-line="332" selection-end-column="42" />
-          <folding>
-            <element signature="e#2951#2952#0" expanded="true" />
-            <element signature="e#2987#2988#0" expanded="true" />
-            <element signature="e#3035#3036#0" expanded="true" />
-            <element signature="e#3075#3076#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../BDNM/YunOffline/src/com/fireawayh/util/IOUtils.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -907,10 +862,23 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/fireawayh/main/cloudmusictoyunpan/CloudMusicToYunPan.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4375">
-          <caret line="96" column="29" selection-start-line="96" selection-start-column="29" selection-end-line="96" selection-end-column="29" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="88" column="29" selection-start-line="88" selection-start-column="29" selection-end-line="88" selection-end-column="29" />
           <folding>
             <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../BDNM/YunOffline/src/com/fireawayh/main/YunOffline.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.53125">
+          <caret line="424" column="14" selection-start-line="424" selection-start-column="14" selection-end-line="424" selection-end-column="14" />
+          <folding>
+            <element signature="e#2951#2952#0" expanded="true" />
+            <element signature="e#2987#2988#0" expanded="true" />
+            <element signature="e#3035#3036#0" expanded="true" />
+            <element signature="e#3075#3076#0" expanded="true" />
           </folding>
         </state>
       </provider>
