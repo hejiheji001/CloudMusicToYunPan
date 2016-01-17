@@ -6,10 +6,9 @@ import com.fireawayh.cloudmusic.utils.JsonUtils;
 import com.fireawayh.cloudmusic.utils.MusicUtils;
 import com.fireawayh.main.YunOffline;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.io.File;
+import java.io.FileInputStream;
+import java.util.*;
 
 /**
  * Created by FireAwayH on 17/01/2016.
@@ -26,27 +25,43 @@ public class CloudMusicToYunPan {
             test();
         }
 
+        String username = "";
+        String password = "";
+
         if(argList.contains("-u") && argList.contains("-p")) {
-            String username = argList.get(argList.indexOf("-u") + 1).toString();
-            String password = argList.get(argList.indexOf("-p") + 1).toString();
+            username = argList.get(argList.indexOf("-u") + 1).toString();
+            password = argList.get(argList.indexOf("-p") + 1).toString();
+        }
+
+        if(argList.contains("-conf")){
+            try {
+                String filename = argList.get(argList.indexOf("-conf") + 1).toString();
+//                filename = "userinfo.properties";
+                Properties prop = new Properties();
+                File file = new File(filename);
+                if (file.exists()) {
+                    prop.load(new FileInputStream(file));
+                    username = prop.getProperty("Username");
+                    password = prop.getProperty("Password");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        if(!username.isEmpty() && !password.isEmpty()){
             YunOffline yo = new YunOffline(username, password);
             if(yo.initYunPan()){
                 yo.getYunPanToken();
-                switch (args[0]){
-                    case "-playlist":
-                        if(argList.contains("-playlist")) {
-                            String playListId = argList.get(argList.indexOf("-playlist") + 1).toString().toUpperCase();
-                            System.out.println("Saved Playlist " + playListId + " To Yun Pan");
-                            saveListToYunPan(yo, playListId);
-                        }
-                        break;
-                    case "-id":
-                        if(argList.contains("-id")) {
-                            String songId = argList.get(argList.indexOf("-id") + 1).toString().toUpperCase();
-                            System.out.println("Saved Song " + songId + " To Yun Pan");
-                            saveToYunPan(yo, songId);
-                        }
-                        break;
+                if(argList.contains("-playlist")) {
+                    String playListId = argList.get(argList.indexOf("-playlist") + 1).toString().toUpperCase();
+                    System.out.println("Saved Playlist " + playListId + " To Yun Pan");
+                    saveListToYunPan(yo, playListId);
+                }
+                if(argList.contains("-id")) {
+                    String songId = argList.get(argList.indexOf("-id") + 1).toString().toUpperCase();
+                    System.out.println("Saved Song " + songId + " To Yun Pan");
+                    saveToYunPan(yo, songId);
                 }
             }else{
                 System.err.println("Init Failed");
@@ -98,6 +113,8 @@ public class CloudMusicToYunPan {
 //            yo.getYunPanToken();
 //            saveListToYunPan(yo, "41370921");
 //        }
+        System.out.println("-u <baidu yun username> -p <baidu yun password> [options]");
+        System.out.println("-c <userinfo.properties> [options]");
         System.out.println("-u <baidu yun username> -p <baidu yun password> [options]");
         System.out.println("-id <netease music id>");
         System.out.println("or");
