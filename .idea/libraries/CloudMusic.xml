@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="CloudMusic">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../CloudMusic/out/artifacts/CloudMusic_jar/CloudMusic.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/../CloudMusic/src" />
+    </SOURCES>
+  </library>
+</component>

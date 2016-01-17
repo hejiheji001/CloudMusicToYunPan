@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="CloudMusicToYunPan:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/CloudMusicToYunPan_jar</output-path>
+    <root id="archive" name="CloudMusicToYunPan.jar">
+      <element id="module-output" name="CloudMusicToYunPan" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../CloudMusic/out/artifacts/CloudMusic_jar/CloudMusic.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../BDNM/YunOffline/out/artifacts/YunOffline_jar/YunOffline.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
