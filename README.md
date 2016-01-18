@@ -1,5 +1,7 @@
 # CloudMusicToYunPan
 
+jar file is located in ~/out/artifacts/CloudMusicToYunPan_jar/CloudMusicToYunPan.jar
+
 # Useage:
 
 ###java -jar xxx.jar -u [your baidu username] -p [your baidu password] [options]
