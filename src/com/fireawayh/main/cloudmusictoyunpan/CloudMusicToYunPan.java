@@ -5,10 +5,13 @@ import com.fireawayh.cloudmusic.utils.DownloadUtils;
 import com.fireawayh.cloudmusic.utils.JsonUtils;
 import com.fireawayh.cloudmusic.utils.MusicUtils;
 import com.fireawayh.main.YunOffline;
+import com.fireawayh.util.IOUtils;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by FireAwayH on 17/01/2016.
@@ -17,6 +20,7 @@ public class CloudMusicToYunPan {
     private static DownloadUtils du = new DownloadUtils();
     private static JsonUtils ju = new JsonUtils();
     private static ApiUtils au = new ApiUtils();
+    private static IOUtils iou = new IOUtils();
 
     public static void main(String[] args){
         List argList = Arrays.asList(args);
@@ -55,6 +59,12 @@ public class CloudMusicToYunPan {
             YunOffline yo = new YunOffline(username, password);
             if(yo.initYunPan()){
                 yo.getYunPanToken();
+
+                if(argList.contains("-r")){
+                    String source = argList.get(argList.indexOf("-r") + 1).toString().toUpperCase();
+                    rename(yo, source);
+                }
+
                 if(argList.contains("-path")) {
                     path = argList.get(argList.indexOf("-path") + 1).toString().toUpperCase();
                 }
@@ -75,6 +85,17 @@ public class CloudMusicToYunPan {
         }
     }
 
+    public static void rename(YunOffline yo, String filename){
+        String[] content = iou.getStringFromFile(filename).split("\r\n");
+        for(String c : content){
+            String[] info = c.split(",");
+            String path = info[0].split("=")[1];
+            String oldName = info[1].split("=")[1];
+            String newName = info[2].split("=")[1];
+            yo.renameFile(path, oldName, newName);
+        }
+    }
+
     public static void saveToYunPan(YunOffline yo, String id, String path){
         MusicUtils mu = new MusicUtils(id);
         Map music = mu.getBestMusic().object();
@@ -82,12 +103,20 @@ public class CloudMusicToYunPan {
         String songName = mu.getSongName();
         String bestMusicId = music.get("dfsId").toString();
         String fileName = artistName + " - " + songName  + "." + music.get("extension");
-        String newFileName = stringConvert(fileName);
+//        String newFileName = stringConvert(fileName);
         String durl = au.getDownloadUrl(bestMusicId);
-        System.out.println("Current task: " + newFileName);
+        Pattern p = Pattern.compile("/([0-9]*.mp3)");
+        Matcher matcher = p.matcher(durl);
+        String oldFileName = "";
+        if (matcher.find()) {
+            oldFileName = matcher.group(1);
+        }
+
+        System.out.println("Current task: " + fileName);
         yo.setSource_url(durl);
         yo.setSavepath(path);
-        yo.saveToYunPan("", "");
+        String taskid = yo.saveToYunPan("", "");
+        iou.appendStringToFile("path=" + path + ",old="+oldFileName + ",new=" + fileName + ",taskid=" + taskid + "\r\n", "rename.txt");
 //        if(!taskid.isEmpty()){
 //            System.out.println("Saved TO Yun Pan, ID IS " + taskid);
 //        }else{
