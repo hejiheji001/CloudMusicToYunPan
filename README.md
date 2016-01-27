@@ -1,11 +1,12 @@
 # CloudMusicToYunPan
 
 1. jar file is located in ~/out/artifacts/CloudMusicToYunPan_jar/CloudMusicToYunPan.jar
-2. Sometimes you need to enter the verify code, you need to install jp2a if you want to see the ascii version directly in your terminal
+2. Sometimes you need to enter the verify code, you need to install jp2a and ImageMagick if you want to see the ascii version directly in your terminal
 
 > Mac OS X
 
 >> port or brew install jp2a
+>> port or brew install ImageMagick
 
 > FreeBSD
 
@@ -20,6 +21,7 @@
 >> emerge jp2a
 
 >>> See: https://csl.name/jp2a/
+>>> See: http://www.imagemagick.org/script/binary-releases.php
 
 # Useage:
 

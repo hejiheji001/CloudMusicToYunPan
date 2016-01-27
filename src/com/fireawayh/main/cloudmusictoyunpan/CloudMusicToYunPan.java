@@ -14,13 +14,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Created by FireAwayH on 17/01/2016.
+ * By FireAwayH on 17/01/2016.
  */
 public class CloudMusicToYunPan {
     private static DownloadUtils du = new DownloadUtils();
     private static JsonUtils ju = new JsonUtils();
     private static ApiUtils au = new ApiUtils();
     private static IOUtils iou = new IOUtils();
+
 
     public static void main(String[] args){
         List argList = Arrays.asList(args);
@@ -59,7 +60,6 @@ public class CloudMusicToYunPan {
             YunOffline yo = new YunOffline(username, password);
             if(yo.initYunPan()){
                 yo.getYunPanToken();
-
                 if(argList.contains("-r")){
                     String source = argList.get(argList.indexOf("-r") + 1).toString().toUpperCase();
                     rename(yo, source);
@@ -86,13 +86,15 @@ public class CloudMusicToYunPan {
     }
 
     public static void rename(YunOffline yo, String filename){
-        String[] content = iou.getStringFromFile(filename).split("\r\n");
+        String[] content = iou.getStringFromFile(filename).split("Item:");
         for(String c : content){
-            String[] info = c.split(",");
-            String path = info[0].split("=")[1];
-            String oldName = info[1].split("=")[1];
-            String newName = info[2].split("=")[1];
-            yo.renameFile(path, oldName, newName);
+            if(!c.isEmpty()) {
+                String[] info = c.split(",");
+                String path = info[0].split("=")[1];
+                String oldName = info[1].split("=")[1];
+                String newName = info[2].split("=")[1];
+                yo.renameFile(path, oldName, newName);
+            }
         }
     }
 
@@ -116,7 +118,7 @@ public class CloudMusicToYunPan {
         yo.setSource_url(durl);
         yo.setSavepath(path);
         String taskid = yo.saveToYunPan("", "");
-        iou.appendStringToFile("path=" + path + ",old="+oldFileName + ",new=" + fileName + ",taskid=" + taskid + "\r\n", "rename.txt");
+        iou.appendStringToFile("Item:path=" + path + ",old="+oldFileName + ",new=" + fileName + ",taskid=" + taskid + "\r\n", "rename.txt");
 //        if(!taskid.isEmpty()){
 //            System.out.println("Saved TO Yun Pan, ID IS " + taskid);
 //        }else{
@@ -135,20 +137,23 @@ public class CloudMusicToYunPan {
     public static String stringConvert(String str) {
         try {
             String fileEncode = System.getProperty("file.encoding");
-            String result = new String(str.getBytes("UTF-8"), fileEncode);
-            return result;
+            return new String(str.getBytes("UTF-8"), fileEncode);
         }catch (Exception e){
             return "?";
         }
     }
 
     public static void test(){
-//        YunOffline yo = new YunOffline("@163.com", "");
+        YunOffline yo = new YunOffline("hejiheji001@163.com", "MyLifeForFire0");
 ////        yo.setPanToken("ee7f2c5c90a95e5c4ac6425f21a994d1");
-//        if(yo.initYunPan()) {
-//            yo.getYunPanToken();
+        if(yo.initYunPan()) {
+            yo.getYunPanToken();
 //            saveListToYunPan(yo, "41370921");
-//        }
+            rename(yo, "rename.txt");
+        }
+
+
+
         System.out.println("-u <baidu yun username> -p <baidu yun password> [options]");
         System.out.println("-c <userinfo.properties> [options]");
         System.out.println("-u <baidu yun username> -p <baidu yun password> [options]");
