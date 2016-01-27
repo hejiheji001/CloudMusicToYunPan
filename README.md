@@ -7,6 +7,7 @@ if you want to see the ascii version directly in your terminal
 > Mac OS X
 
 >> port or brew install jp2a
+
 >> port or brew install ImageMagick
 
 > FreeBSD
@@ -22,6 +23,7 @@ if you want to see the ascii version directly in your terminal
 >> emerge jp2a
 
 >>> See: https://csl.name/jp2a/
+
 >>> See: http://www.imagemagick.org/script/binary-releases.php
 
 # Useage:
