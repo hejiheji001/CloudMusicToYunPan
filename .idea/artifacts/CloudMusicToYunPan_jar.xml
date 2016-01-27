@@ -3,7 +3,7 @@
     <output-path>$PROJECT_DIR$</output-path>
     <root id="archive" name="CloudMusicToYunPan.jar">
       <element id="module-output" name="CloudMusicToYunPan" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/../CloudMusic/out/artifacts/CloudMusic_jar/CloudMusic.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../CloudMusic/CloudMusic.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/../YunOffline/YunOffline.jar" path-in-jar="/" />
     </root>
   </artifact>
