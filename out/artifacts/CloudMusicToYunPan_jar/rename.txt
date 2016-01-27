@@ -1,2 +1,0 @@
-Item:path=/NETEASEMUSIC,old=1.mp3,new=群星 - 诸葛亮的爱情故事.mp3,taskid=1096025879
-Item:path=/NETEASEMUSIC,old=7698780418009165.mp3,new=群星 - 白金王司猴.mp3,taskid=1096025858
