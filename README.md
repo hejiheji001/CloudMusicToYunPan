@@ -28,6 +28,9 @@ if you want to see the ascii version directly in your terminal
 
 # Useage:
 
+## Support GUI now! Simply double click the jar file or java -jar xxx.jar
+
+## Or you can still run it in command line
 ###java -jar xxx.jar -u [your baidu username] -p [your baidu password] [options]
 ###java -jar xxx.jar -conf [userinfo.properties] [options]
 
