@@ -4,6 +4,8 @@
       <root url="jar://$PROJECT_DIR$/../YunOffline/YunOffline.jar!/" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/../YunOffline/src" />
+    </SOURCES>
   </library>
 </component>

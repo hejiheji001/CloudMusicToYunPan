@@ -6,10 +6,18 @@ import com.fireawayh.cloudmusic.utils.JsonUtils;
 import com.fireawayh.cloudmusic.utils.MusicUtils;
 import com.fireawayh.main.YunOffline;
 import com.fireawayh.util.IOUtils;
+import com.fireawayh.util.ShowGUI;
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.*;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -24,10 +32,11 @@ public class CloudMusicToYunPan {
 
 
     public static void main(String[] args){
-        List argList = Arrays.asList(args);
+        List<String> argList = Arrays.asList(args);
 
         if(argList.isEmpty()){
-            test();
+//            test();
+            showGUI();
         }
 
         String username = "";
@@ -35,13 +44,13 @@ public class CloudMusicToYunPan {
         String path = "/";
 
         if(argList.contains("-u") && argList.contains("-p")) {
-            username = argList.get(argList.indexOf("-u") + 1).toString();
-            password = argList.get(argList.indexOf("-p") + 1).toString();
+            username = argList.get(argList.indexOf("-u") + 1);
+            password = argList.get(argList.indexOf("-p") + 1);
         }
 
         if(argList.contains("-conf")){
             try {
-                String filename = argList.get(argList.indexOf("-conf") + 1).toString();
+                String filename = argList.get(argList.indexOf("-conf") + 1);
 //                filename = "userinfo.properties";
                 Properties prop = new Properties();
                 File file = new File(filename);
@@ -57,31 +66,126 @@ public class CloudMusicToYunPan {
         }
 
         if(!username.isEmpty() && !password.isEmpty()){
-            YunOffline yo = new YunOffline(username, password);
-            if(yo.initYunPan()){
-                yo.getYunPanToken();
-                if(argList.contains("-r")){
-                    String source = argList.get(argList.indexOf("-r") + 1).toString().toUpperCase();
-                    rename(yo, source);
-                }
+            init(username, password, argList, path);
+        }
+    }
 
-                if(argList.contains("-path")) {
-                    path = argList.get(argList.indexOf("-path") + 1).toString().toUpperCase();
+    private static void showGUI() {
+        TextField idText = new TextField();
+        Frame frame = new Frame("Cloud Music Downloader");
+        Dialog dialog = new Dialog(frame, "Hint", true);
+        idText.setColumns(15);
+        DefaultComboBoxModel<String> typeSelector = new DefaultComboBoxModel<>();
+        typeSelector.addElement("Music ID");
+        typeSelector.addElement("Playlist ID");
+        JComboBox<String> idType = new JComboBox<>(typeSelector);
+        Button start = new Button("Start!");
+        frame.add(idType);
+        frame.add(idText);
+        frame.add(start);
+        frame.setLayout(new FlowLayout());
+        frame.setSize(250, 100);
+        frame.setResizable(false);
+        frame.setLocation(getCenter(frame));
+        frame.setVisible(true);
+        frame.addWindowListener(
+                new WindowAdapter() {
+                    public void windowClosing(WindowEvent e) {
+                        System.exit(0);
+                    }
                 }
+        );
+        start.addMouseListener(
+                new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        Label l = new Label();
+                        l.setAlignment(Label.CENTER);
+                        dialog.setSize(150, 50);
+                        dialog.setLocation(getCenter(dialog));
+                        dialog.addWindowListener(
+                                new WindowAdapter() {
+                                    @Override
+                                    public void windowClosing(WindowEvent e) {
+                                        dialog.removeAll();
+                                        dialog.dispose();
+                                    }
+                                }
+                        );
+                        String songId = idText.getText();
+                        if (songId.isEmpty()) {
+                            l.setText("Music id or Playlist id is required");
+                            dialog.add(l);
+                            dialog.setVisible(true);
+                            return;
+                        }
 
-                if(argList.contains("-playlist")) {
-                    String playListId = argList.get(argList.indexOf("-playlist") + 1).toString().toUpperCase();
-                    System.out.println("Saved Playlist " + playListId + " To Yun Pan");
-                    saveListToYunPan(yo, playListId, path);
+                        start.setLabel("Working");
+                        start.setEnabled(false);
+
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                ShowGUI s = new ShowGUI();
+
+                                if (idType.getSelectedItem().equals("Music ID")) {
+                                    String durl = getDURLById(songId);
+                                    s.showGui(durl);
+                                }
+                                if (idType.getSelectedItem().equals("Playlist ID")) {
+                                    ArrayList<String> songIds = ju.getPlayListSongs(songId);
+                                    ArrayList<String> durls = new ArrayList<>();
+                                    for (int i = 0; i < songIds.size() - 1; i++) {
+                                        String durl = getDURLById(songIds.get(i));
+                                        durls.add(durl);
+                                    }
+                                    s.showGui(durls);
+                                }
+
+                                start.setLabel("Start");
+                                start.setEnabled(true);
+                            }
+                        }).start();
+                    }
                 }
-                if(argList.contains("-id")) {
-                    String songId = argList.get(argList.indexOf("-id") + 1).toString().toUpperCase();
-                    System.out.println("Saved Song " + songId + " To Yun Pan");
-                    saveToYunPan(yo, songId, path);
-                }
-            }else{
-                System.err.println("Init Failed");
+        );
+    }
+
+    private static Point getCenter(Window f) {
+        int windowWidth = f.getWidth();                    //获得窗口宽
+        int windowHeight = f.getHeight();
+        Toolkit kit = Toolkit.getDefaultToolkit();             //定义工具包
+        Dimension screenSize = kit.getScreenSize();            //获取屏幕的尺寸
+        int screenWidth = screenSize.width;                    //获取屏幕的宽
+        int screenHeight = screenSize.height;
+        return new Point(screenWidth / 2 - windowWidth / 2, screenHeight / 2 - windowHeight / 2);
+    }
+
+    public static void init(String username, String password, List<String> argList, String path) {
+        YunOffline yo = new YunOffline(username, password);
+        if (yo.initYunPan()) {
+            yo.getYunPanToken();
+            if (argList.contains("-r")) {
+                String source = argList.get(argList.indexOf("-r") + 1).toUpperCase();
+                rename(yo, source);
             }
+
+            if (argList.contains("-path")) {
+                path = argList.get(argList.indexOf("-path") + 1).toUpperCase();
+            }
+
+            if (argList.contains("-playlist")) {
+                String playListId = argList.get(argList.indexOf("-playlist") + 1).toUpperCase();
+                System.out.println("Saved Playlist " + playListId + " To Yun Pan");
+                saveListToYunPan(yo, playListId, path);
+            }
+            if (argList.contains("-id")) {
+                String songId = argList.get(argList.indexOf("-id") + 1).toUpperCase();
+                System.out.println("Saved Song " + songId + " To Yun Pan");
+                saveToYunPan(yo, songId, path);
+            }
+        } else {
+            System.err.println("Init Failed");
         }
     }
 
@@ -100,7 +204,7 @@ public class CloudMusicToYunPan {
 
     public static void saveToYunPan(YunOffline yo, String id, String path){
         MusicUtils mu = new MusicUtils(id);
-        Map music = mu.getBestMusic().object();
+        Map<String, Object> music = mu.getBestMusic().object();
         String artistName = mu.getArtist();
         String songName = mu.getSongName();
         String bestMusicId = music.get("dfsId").toString();
@@ -143,17 +247,22 @@ public class CloudMusicToYunPan {
         }
     }
 
+    public static String getDURLById(String id) {
+        MusicUtils mu = new MusicUtils(id);
+        Map<String, Object> music = mu.getBestMusic().object();
+        String bestMusicId = music.get("dfsId").toString();
+        return au.getDownloadUrl(bestMusicId);
+    }
+
     public static void test(){
-        YunOffline yo = new YunOffline("hejiheji001@163.com", "MyLifeForFire0");
-////        yo.setPanToken("ee7f2c5c90a95e5c4ac6425f21a994d1");
-        if(yo.initYunPan()) {
-            yo.getYunPanToken();
-//            saveListToYunPan(yo, "41370921");
-            rename(yo, "rename.txt");
-        }
-
-
-
+//        YunOffline yo = new YunOffline("hejiheji001@163.com", "MyLifeForFire0");
+//////        yo.setPanToken("ee7f2c5c90a95e5c4ac6425f21a994d1");
+//        if(yo.initYunPan()) {
+//            yo.getYunPanToken();
+////            saveListToYunPan(yo, "41370921");
+//            rename(yo, "rename.txt");
+//        }
+//
         System.out.println("-u <baidu yun username> -p <baidu yun password> [options]");
         System.out.println("-c <userinfo.properties> [options]");
         System.out.println("-u <baidu yun username> -p <baidu yun password> [options]");
