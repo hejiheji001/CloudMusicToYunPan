@@ -221,8 +221,8 @@ public class CloudMusicToYunPan {
         System.out.println("Current task: " + fileName);
         yo.setSource_url(durl);
         yo.setSavepath(path);
-        String taskid = yo.saveToYunPan("", "");
-        iou.appendStringToFile("Item:path=" + path + ",old="+oldFileName + ",new=" + fileName + ",taskid=" + taskid + "\r\n", "rename.txt");
+        yo.saveToYunPan("", "");
+        iou.appendStringToFile("Item:path=" + path + ",old=" + oldFileName + ",new=" + fileName + "\r\n", "rename.txt");
 //        if(!taskid.isEmpty()){
 //            System.out.println("Saved TO Yun Pan, ID IS " + taskid);
 //        }else{
