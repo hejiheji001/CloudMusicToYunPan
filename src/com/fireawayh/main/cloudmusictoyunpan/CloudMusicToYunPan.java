@@ -1,7 +1,6 @@
 package com.fireawayh.main.cloudmusictoyunpan;
 
 import com.fireawayh.cloudmusic.utils.ApiUtils;
-import com.fireawayh.cloudmusic.utils.DownloadUtils;
 import com.fireawayh.cloudmusic.utils.JsonUtils;
 import com.fireawayh.cloudmusic.utils.MusicUtils;
 import com.fireawayh.main.YunOffline;
@@ -10,10 +9,7 @@ import com.fireawayh.util.ShowGUI;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.*;
@@ -25,7 +21,7 @@ import java.util.regex.Pattern;
  * By FireAwayH on 17/01/2016.
  */
 public class CloudMusicToYunPan {
-    private static DownloadUtils du = new DownloadUtils();
+    //    private static DownloadUtils du = new DownloadUtils();
     private static JsonUtils ju = new JsonUtils();
     private static ApiUtils au = new ApiUtils();
     private static IOUtils iou = new IOUtils();
@@ -78,6 +74,7 @@ public class CloudMusicToYunPan {
         DefaultComboBoxModel<String> typeSelector = new DefaultComboBoxModel<>();
         typeSelector.addElement("Music ID");
         typeSelector.addElement("Playlist ID");
+        typeSelector.addElement("Rename By File");
         JComboBox<String> idType = new JComboBox<>(typeSelector);
         Button start = new Button("Start!");
         frame.add(idType);
@@ -95,6 +92,23 @@ public class CloudMusicToYunPan {
                     }
                 }
         );
+
+        idType.addItemListener(
+                new ItemListener() {
+                    public void itemStateChanged(ItemEvent event) {
+                        switch (event.getStateChange()) {
+                            case ItemEvent.SELECTED:
+                                if (event.getItem().equals("Rename By File")) {
+                                    idText.setText("rename.txt");
+                                } else {
+                                    idText.setText("");
+                                }
+                                break;
+                        }
+                    }
+                }
+        );
+
         start.addMouseListener(
                 new MouseAdapter() {
                     @Override
@@ -113,6 +127,7 @@ public class CloudMusicToYunPan {
                                 }
                         );
                         String songId = idText.getText();
+
                         if (songId.isEmpty()) {
                             l.setText("Music id or Playlist id is required");
                             dialog.add(l);
@@ -129,17 +144,20 @@ public class CloudMusicToYunPan {
                                 ShowGUI s = new ShowGUI();
 
                                 if (idType.getSelectedItem().equals("Music ID")) {
-                                    String durl = getDURLById(songId);
+                                    String[] durl = getDURLById(songId);
                                     s.showGui(durl);
                                 }
                                 if (idType.getSelectedItem().equals("Playlist ID")) {
                                     ArrayList<String> songIds = ju.getPlayListSongs(songId);
-                                    ArrayList<String> durls = new ArrayList<>();
+                                    ArrayList<String[]> durls = new ArrayList<>();
                                     for (int i = 0; i < songIds.size() - 1; i++) {
-                                        String durl = getDURLById(songIds.get(i));
+                                        String[] durl = getDURLById(songIds.get(i));
                                         durls.add(durl);
                                     }
                                     s.showGui(durls);
+                                }
+                                if (idType.getSelectedItem().equals("Rename By File")) {
+                                    s.showGui(songId);
                                 }
 
                                 start.setLabel("Start");
@@ -166,8 +184,8 @@ public class CloudMusicToYunPan {
         if (yo.initYunPan()) {
             yo.getYunPanToken();
             if (argList.contains("-r")) {
-                String source = argList.get(argList.indexOf("-r") + 1).toUpperCase();
-                rename(yo, source);
+                String filename = argList.get(argList.indexOf("-r") + 1).toUpperCase();
+                rename(yo, filename);
             }
 
             if (argList.contains("-path")) {
@@ -237,21 +255,25 @@ public class CloudMusicToYunPan {
         }
     }
 
-//    TODO
-    public static String stringConvert(String str) {
-        try {
-            String fileEncode = System.getProperty("file.encoding");
-            return new String(str.getBytes("UTF-8"), fileEncode);
-        }catch (Exception e){
-            return "?";
-        }
-    }
+//    public static String stringConvert(String str) {
+//        try {
+//            String fileEncode = System.getProperty("file.encoding");
+//            return new String(str.getBytes("UTF-8"), fileEncode);
+//        }catch (Exception e){
+//            return "?";
+//        }
+//    }
 
-    public static String getDURLById(String id) {
+    public static String[] getDURLById(String id) {
         MusicUtils mu = new MusicUtils(id);
-        Map<String, Object> music = mu.getBestMusic().object();
+        Map music = mu.getBestMusic().object();
+        String artistName = mu.getArtist();
+        String ext = music.get("extension").toString();
+        String songName = mu.getSongName();
         String bestMusicId = music.get("dfsId").toString();
-        return au.getDownloadUrl(bestMusicId);
+
+        String newName = artistName + " - " + songName + "." + ext;
+        return new String[]{au.getDownloadUrl(bestMusicId), "", bestMusicId + ext, newName};
     }
 
     public static void test(){
